@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Admin — RB Homes and Property</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2312211d'/%3E%3Cpath d='M16 24l16-11 16 11v22a3 3 0 0 1-3 3H19a3 3 0 0 1-3-3z' fill='none' stroke='%23d8ad66' stroke-width='3.4' stroke-linejoin='round'/%3E%3Cpath d='M26 48V34h12v14' fill='none' stroke='%23d8ad66' stroke-width='3.4' stroke-linejoin='round'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="src/style.css">
+<link rel="stylesheet" href="src/admin.css">
+</head>
+<body>
+
+<!-- ======================================================================
+     LOGIN SCREEN
+     ====================================================================== -->
+<section class="auth" id="authScreen">
+  <aside class="auth__aside">
+    <img src="assets/img/hero.jpg" alt="">
+    <div>
+      <a class="brand" href="index.html">
+        <span class="brand__mark" aria-hidden="true">RB</span>
+        <span class="brand__text">
+          <span class="brand__name">RB Homes <span style="color:var(--gold)">&amp;</span> Property</span>
+          <span class="brand__sub">Real Estate Consultants</span>
+        </span>
+      </a>
+    </div>
+    <div>
+      <h2>Manage your listings, enquiries and settings in one place.</h2>
+      <p>Add a property, mark it under offer, follow up on a client request — all from the office or your phone.</p>
+    </div>
+    <p class="auth__aside-foot">Old Ife Rd, opposite Alhiayu Hospital, Ibadan · Open 24 hours</p>
+  </aside>
+
+  <div class="auth__main">
+    <div class="auth__card">
+      <a class="auth__back" href="index.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>
+        Back to website
+      </a>
+      <h1 id="authTitle">Staff sign in</h1>
+      <p id="authSubtitle">Enter your credentials to open the RB Homes dashboard.</p>
+
+      <div class="auth__err" id="authErr" role="alert">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16.5h.01"/></svg>
+        <span id="authErrText">Incorrect details.</span>
+      </div>
+
+      <!-- sign in form -->
+      <form id="loginForm" novalidate>
+        <div class="field">
+          <label for="loginUser">Username</label>
+          <input class="input" id="loginUser" type="text" autocomplete="username" placeholder="admin" spellcheck="false">
+        </div>
+        <div class="field">
+          <label for="loginPass">Password</label>
+          <div class="pw-wrap">
+            <input class="input" id="loginPass" type="password" autocomplete="current-password" placeholder="••••••••">
+            <button type="button" class="pw-toggle" data-pw="loginPass" aria-label="Show password">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>
+            </button>
+          </div>
+        </div>
+        <div class="auth__row">
+          <label class="check"><input type="checkbox" id="rememberMe" checked> Keep me signed in</label>
+          <button type="button" class="linkbtn" id="forgotBtn">Forgot password?</button>
+        </div>
+        <button class="btn btn--gold btn--block" type="submit" id="loginBtn">Sign in</button>
+      </form>
+
+      <!-- forgot password form -->
+      <form id="recoverForm" class="hidden" novalidate>
+        <p style="font-size:.88rem;color:var(--body);margin-bottom:18px">
+          Enter your <b>recovery key</b> to set a new password. The key is issued once by the developer
+          and is not stored on the website.
+        </p>
+        <div class="field">
+          <label for="recoverUser">Username</label>
+          <input class="input" id="recoverUser" type="text" placeholder="admin" spellcheck="false">
+        </div>
+        <div class="field">
+          <label for="recoverKey">Recovery key</label>
+          <input class="input" id="recoverKey" type="text" placeholder="RBH-RECOVERY-KEY" spellcheck="false">
+          <span class="hint">Demo key: <b>RBH-RESET-2026</b></span>
+        </div>
+        <div class="field">
+          <label for="recoverNew">New password</label>
+          <div class="pw-wrap">
+            <input class="input" id="recoverNew" type="password" placeholder="At least 8 characters">
+            <button type="button" class="pw-toggle" data-pw="recoverNew" aria-label="Show password">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>
+            </button>
+          </div>
+        </div>
+        <button class="btn btn--gold btn--block" type="submit">Reset password</button>
+        <button class="btn btn--ghost btn--block" type="button" id="backToLogin" style="margin-top:10px">Back to sign in</button>
+      </form>
+
+      <div class="auth__hint">
+        <b>Demo credentials</b>
+        Username: <code>admin</code> &nbsp;·&nbsp; Password: <code>Rbhomes@2026</code><br>
+        <span style="display:inline-block;margin-top:6px">You'll be prompted to change it after signing in.</span>
+      </div>
+      <p class="demo-note">
+        This dashboard stores data in your browser only (localStorage) — there is no server.
+        Perfect for a demo or a single-office setup; for multi-user production use, connect a real backend.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ======================================================================
+     DASHBOARD APP
+     ====================================================================== -->
+<div class="app hidden" id="appShell">
+
+  <!-- ---------------------------------------------------------- sidebar -->
+  <aside class="sidebar" id="sidebar">
+    <a class="brand" href="index.html" title="View public website">
+      <span class="brand__mark" aria-hidden="true">RB</span>
+      <span class="brand__text">
+        <span class="brand__name">RB Homes</span>
+        <span class="brand__sub">Admin panel</span>
+      </span>
+    </a>
+
+    <div class="side__label">Overview</div>
+    <button class="side__link is-on" data-view="dashboard">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg>
+      Dashboard
+    </button>
+
+    <div class="side__label">Property</div>
+    <button class="side__link" data-view="properties">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5L12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/><path d="M9 21v-6h6v6"/></svg>
+      All properties <span class="side__badge" id="navPropCount">0</span>
+    </button>
+    <button class="side__link" data-action="new-property">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+      Add property
+    </button>
+
+    <div class="side__label">Clients</div>
+    <button class="side__link" data-view="enquiries">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H8l-5 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+      Enquiries <span class="side__badge" id="navEnqCount">0</span>
+    </button>
+
+    <div class="side__label">Account</div>
+    <button class="side__link" data-view="settings">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-2.9 1.2V21a2 2 0 1 1-4 0v-.1A1.7 1.7 0 0 0 7 19.4a1.7 1.7 0 0 0-1.9.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1A1.7 1.7 0 0 0 3 15a1.7 1.7 0 0 0-1.6-1H1a2 2 0 1 1 0-4h.4A1.7 1.7 0 0 0 3 9a1.7 1.7 0 0 0-.3-1.9l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1A1.7 1.7 0 0 0 9 3.1V3a2 2 0 1 1 4 0v.1A1.7 1.7 0 0 0 15 4.6a1.7 1.7 0 0 0 1.9-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1A1.7 1.7 0 0 0 20.9 9H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg>
+      Site settings
+    </button>
+    <button class="side__link" data-view="security">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+      Password &amp; login
+    </button>
+    <button class="side__link" data-view="activity">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l2 6 4-14 2 8h6"/></svg>
+      Activity log
+    </button>
+
+    <div class="side__foot">
+      <span id="storageWarn"></span>
+      <a class="side__link" href="index.html" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3h7v7"/><path d="M21 3l-9 9"/><path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5"/></svg>
+        View public site
+      </a>
+      <button class="side__link" id="logoutBtn2">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="M16 17l5-5-5-5M21 12H9"/></svg>
+        Sign out
+      </button>
+    </div>
+  </aside>
+  <div class="scrim" id="scrim"></div>
+
+  <!-- ------------------------------------------------------------- main -->
+  <div class="main">
+    <header class="topbar">
+      <button class="iconbtn sidebar-toggle" id="sidebarToggle" aria-label="Toggle menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </button>
+      <div>
+        <h2 class="topbar__title" id="viewTitle">Dashboard<span id="viewCrumb">Overview of your portfolio</span></h2>
+      </div>
+
+      <div class="topbar__search">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+        <input class="input" id="globalSearch" type="search" placeholder="Search properties, refs, clients…">
+      </div>
+
+      <button class="iconbtn" id="bellBtn" aria-label="New enquiries" title="New enquiries">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 1 0-12 0c0 7-3 8-3 8h18s-3-1-3-8"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>
+        <span class="iconbtn__dot hidden" id="bellDot">0</span>
+      </button>
+
+      <button class="btn btn--gold btn--sm" data-action="new-property">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+        New listing
+      </button>
+
+      <div class="usermenu">
+        <button class="userchip" id="userChip">
+          <span class="avatar" id="userAvatar">AD</span>
+          <span><b id="userName">RB Admin</b><span id="userRole">Administrator</span></span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="dropdown" id="userDropdown">
+          <div class="dropdown__head">
+            <b id="ddName">RB Admin</b>
+            <span id="ddUser">@admin</span>
+          </div>
+          <button data-view="settings">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M4 12a8 8 0 0 1 .1-1.3l-1.4-1 1.6-2.8 1.7.6A8 8 0 0 1 8.6 6l.2-1.8h3l.2 1.8a8 8 0 0 1 2.3 1.3l1.7-.6 1.6 2.8-1.4 1a8 8 0 0 1 0 2.6l1.4 1-1.6 2.8-1.7-.6a8 8 0 0 1-2.3 1.3l-.2 1.8h-3L8.6 18a8 8 0 0 1-2.3-1.3l-1.7.6-1.6-2.8 1.4-1A8 8 0 0 1 4 12z"/></svg>
+            Site settings
+          </button>
+          <button data-view="security">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            Change password
+          </button>
+          <a href="index.html" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3h7v7"/><path d="M21 3l-9 9"/><path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5"/></svg>
+            View website
+          </a>
+          <button class="danger" id="logoutBtn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="M16 17l5-5-5-5M21 12H9"/></svg>
+            Sign out
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <div class="content">
+      <div id="pwBanner"></div>
+
+      <!-- ============================================ DASHBOARD VIEW -->
+      <section class="view is-on" id="view-dashboard">
+        <div class="pagehead">
+          <div>
+            <h2 id="greeting">Welcome back</h2>
+            <p id="todayLine">Here is how your portfolio is doing today.</p>
+          </div>
+          <div class="pagehead__actions">
+            <button class="btn btn--ghost btn--sm" data-view="enquiries">View enquiries</button>
+            <button class="btn btn--gold btn--sm" data-action="new-property">Add property</button>
+          </div>
+        </div>
+
+        <div class="stats" id="statsRow"></div>
+
+        <div class="two-col">
+          <div>
+            <div class="panel">
+              <div class="panel__head">
+                <h3>Recent enquiries</h3>
+                <p>Latest client requests from the website</p>
+                <button class="btn btn--ghost btn--xs spacer" data-view="enquiries">See all</button>
+              </div>
+              <div class="panel__body panel__body--flush panel__body--scroll-mobile" id="dashEnquiries"></div>
+            </div>
+
+            <div class="panel">
+              <div class="panel__head">
+                <h3>Listings by purpose</h3>
+                <p>Where your current stock sits</p>
+              </div>
+              <div class="panel__body panel__body--scroll-mobile panel__body--scroll-listings">
+                <div class="bars" id="dashPurposeBars"></div>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <div class="panel">
+              <div class="panel__head"><h3>Inspection requests</h3></div>
+              <div class="panel__body panel__body--scroll-mobile panel__body--scroll-inspections">
+                <div class="dashboard-scroll-track dashboard-scroll-track--inspections">
+                  <div class="chart" id="dashChart"></div>
+                  <p style="font-size:.76rem;color:var(--muted);margin:12px 0 0;text-align:center">Enquiries over the last 7 days</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="panel">
+              <div class="panel__head"><h3>Quick actions</h3></div>
+              <div class="panel__body" style="display:grid;gap:9px">
+                <button class="btn btn--ghost btn--block btn--sm" data-action="new-property" style="justify-content:flex-start">➕ Add a new property</button>
+                <button class="btn btn--ghost btn--block btn--sm" data-action="export" style="justify-content:flex-start">⬇️ Download data backup</button>
+                <button class="btn btn--ghost btn--block btn--sm" data-view="security" style="justify-content:flex-start">🔒 Change admin password</button>
+                <button class="btn btn--ghost btn--block btn--sm" data-view="settings" style="justify-content:flex-start">⚙️ Edit business details</button>
+              </div>
+            </div>
+
+            <div class="panel">
+              <div class="panel__head"><h3>Recent activity</h3></div>
+              <div class="panel__body panel__body--scroll-mobile panel__body--scroll-activity" style="padding-top:6px" id="dashActivity"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- =========================================== PROPERTIES VIEW -->
+      <section class="view" id="view-properties">
+        <div class="pagehead">
+          <div>
+            <h2>All properties</h2>
+            <p id="propSummary">Manage every listing on the site.</p>
+          </div>
+          <div class="pagehead__actions">
+            <button class="btn btn--ghost btn--sm" data-action="export">Export</button>
+            <button class="btn btn--gold btn--sm" data-action="new-property">Add property</button>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="table-tools">
+            <div class="filters__search">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+              <input class="input" id="propSearch" type="search" placeholder="Search title, ref, area…">
+            </div>
+            <select class="select" id="propPurposeFilter">
+              <option value="">All purposes</option>
+              <option value="sale">For sale</option>
+              <option value="rent">For rent</option>
+              <option value="shortlet">Short-let</option>
+            </select>
+            <select class="select" id="propStatusFilter">
+              <option value="">All statuses</option>
+              <option value="available">Available</option>
+              <option value="pending">Under offer</option>
+              <option value="sold">Sold</option>
+              <option value="rented">Rented</option>
+            </select>
+            <select class="select" id="propSortFilter">
+              <option value="new">Newest first</option>
+              <option value="old">Oldest first</option>
+              <option value="priceHigh">Price high → low</option>
+              <option value="priceLow">Price low → high</option>
+              <option value="views">Most viewed</option>
+            </select>
+          </div>
+          <div class="table-wrap">
+            <table class="data">
+              <thead>
+                <tr>
+                  <th>Property</th>
+                  <th>Purpose</th>
+                  <th>Price</th>
+                  <th>Type</th>
+                  <th>Beds</th>
+                  <th>Status</th>
+                  <th>Views</th>
+                  <th style="text-align:right">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="propTableBody"></tbody>
+            </table>
+          </div>
+          <div id="propTableEmpty" class="table-empty hidden">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5L12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/></svg>
+            No properties match this filter.
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================ ENQUIRIES VIEW -->
+      <section class="view" id="view-enquiries">
+        <div class="pagehead">
+          <div>
+            <h2>Client enquiries</h2>
+            <p>Requests submitted through the website contact form.</p>
+          </div>
+          <div class="pagehead__actions">
+            <div class="seg" id="enqSeg">
+              <button class="is-on" data-filter="all">All <span class="count" id="cAll">0</span></button>
+              <button data-filter="new">New <span class="count" id="cNew">0</span></button>
+              <button data-filter="contacted">Contacted <span class="count" id="cContacted">0</span></button>
+              <button data-filter="closed">Closed <span class="count" id="cClosed">0</span></button>
+            </div>
+          </div>
+        </div>
+        <div class="enq-grid" id="enqGrid"></div>
+        <div class="table-empty hidden" id="enqEmpty" style="background:#fff;border:1px solid var(--line-2);border-radius:14px">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H8l-5 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          No enquiries in this group yet.
+        </div>
+      </section>
+
+      <!-- ============================================= SETTINGS VIEW -->
+      <section class="view" id="view-settings">
+        <div class="pagehead">
+          <div>
+            <h2>Site settings</h2>
+            <p>These details appear on the public website and in WhatsApp links.</p>
+          </div>
+        </div>
+
+        <div class="two-col">
+          <div class="panel">
+            <div class="panel__head"><h3>Business details</h3></div>
+            <div class="panel__body">
+              <form id="settingsForm">
+                <div class="form-grid">
+                  <h4>Identity</h4>
+                  <div class="field">
+                    <label for="setName">Business name</label>
+                    <input class="input" id="setName" name="businessName" type="text">
+                  </div>
+                  <div class="field">
+                    <label for="setTagline">Tagline</label>
+                    <input class="input" id="setTagline" name="tagline" type="text">
+                  </div>
+
+                  <h4>Contact</h4>
+                  <div class="field">
+                    <label for="setPhone">Phone number</label>
+                    <input class="input" id="setPhone" name="phone" type="tel">
+                  </div>
+                  <div class="field">
+                    <label for="setWhatsapp">WhatsApp (international, digits only)</label>
+                    <input class="input" id="setWhatsapp" name="whatsapp" type="tel">
+                    <span class="hint">e.g. 2348164309699</span>
+                  </div>
+                  <div class="field">
+                    <label for="setEmail">Email address</label>
+                    <input class="input" id="setEmail" name="email" type="email">
+                  </div>
+                  <div class="field">
+                    <label for="setHours">Opening hours</label>
+                    <input class="input" id="setHours" name="hours" type="text">
+                  </div>
+                  <div class="field field--full">
+                    <label for="setAddress">Office address</label>
+                    <input class="input" id="setAddress" name="address" type="text">
+                  </div>
+                  <div class="field field--full">
+                    <label for="setMaps">Google Maps plus code / query</label>
+                    <input class="input" id="setMaps" name="mapsQuery" type="text">
+                  </div>
+
+                  <h4>Homepage</h4>
+                  <div class="field field--full">
+                    <label for="setHeroHeadline">Hero headline</label>
+                    <input class="input" id="setHeroHeadline" name="heroHeadline" type="text">
+                  </div>
+                  <div class="field field--full">
+                    <label for="setHeroSub">Hero paragraph</label>
+                    <textarea class="textarea" id="setHeroSub" name="heroSub"></textarea>
+                  </div>
+                </div>
+                <div class="form-actions">
+                  <button class="btn btn--gold" type="submit">Save settings</button>
+                  <button class="btn btn--ghost" type="button" id="resetSettings">Reset to defaults</button>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <div>
+            <div class="panel">
+              <div class="panel__head"><h3>Notifications</h3></div>
+              <div class="panel__body">
+                <div class="switch">
+                  <input type="checkbox" id="setNotify">
+                  <div><label for="setNotify">Email alerts for new enquiries</label><p class="hint">Sends a notification to the email above.</p></div>
+                </div>
+                <div class="switch">
+                  <input type="checkbox" id="setAutoReply">
+                  <div><label for="setAutoReply">Auto-reply acknowledgement</label><p class="hint">Website confirms receipt to the client.</p></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="panel">
+              <div class="panel__head"><h3>Data &amp; backup</h3></div>
+              <div class="panel__body" style="display:grid;gap:9px">
+                <button class="btn btn--ghost btn--block btn--sm" data-action="export">Download backup (.json)</button>
+                <label class="btn btn--ghost btn--block btn--sm" style="justify-content:center;cursor:pointer">
+                  Restore from backup
+                  <input type="file" id="importFile" accept="application/json" class="hidden">
+                </label>
+                <button class="btn btn--ghost btn--block btn--sm" data-action="reset-demo" style="color:var(--amber)">Reload demo data</button>
+                <button class="btn btn--danger btn--block btn--sm" data-action="wipe">Delete all listings &amp; enquiries</button>
+                <p class="hint">Everything lives in this browser. Download a backup before clearing your browser data.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================= SECURITY VIEW -->
+      <section class="view" id="view-security">
+        <div class="pagehead">
+          <div>
+            <h2>Password &amp; login</h2>
+            <p>Change the credentials used to open this dashboard.</p>
+          </div>
+        </div>
+
+        <div class="two-col">
+          <div>
+            <div class="panel">
+              <div class="panel__head">
+                <h3>Change password</h3>
+                <p>You will stay signed in after changing it.</p>
+              </div>
+              <div class="panel__body">
+                <form id="pwForm" novalidate>
+                  <div class="field">
+                    <label for="pwCurrent">Current password</label>
+                    <div class="pw-wrap">
+                      <input class="input" id="pwCurrent" type="password" autocomplete="current-password" placeholder="Enter current password">
+                      <button type="button" class="pw-toggle" data-pw="pwCurrent" aria-label="Show password">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>
+                      </button>
+                    </div>
+                  </div>
+                  <div class="field">
+                    <label for="pwNew">New password</label>
+                    <div class="pw-wrap">
+                      <input class="input" id="pwNew" type="password" autocomplete="new-password" placeholder="At least 8 characters">
+                      <button type="button" class="pw-toggle" data-pw="pwNew" aria-label="Show password">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>
+                      </button>
+                    </div>
+                    <div class="strength" id="pwStrength" data-score="0">
+                      <div class="strength__track">
+                        <span class="strength__seg"></span><span class="strength__seg"></span><span class="strength__seg"></span><span class="strength__seg"></span><span class="strength__seg"></span>
+                      </div>
+                      <div class="strength__label" id="pwStrengthLabel">Password strength</div>
+                    </div>
+                    <ul class="pw-rules" id="pwRules">
+                      <li data-rule="len"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg> At least 8 characters</li>
+                      <li data-rule="upper"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg> One uppercase letter</li>
+                      <li data-rule="lower"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg> One lowercase letter</li>
+                      <li data-rule="num"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg> One number</li>
+                    </ul>
+                  </div>
+                  <div class="field">
+                    <label for="pwConfirm">Confirm new password</label>
+                    <input class="input" id="pwConfirm" type="password" autocomplete="new-password" placeholder="Re-type new password">
+                    <span class="field__err">Passwords do not match.</span>
+                  </div>
+                  <div class="form-actions" style="margin-top:16px">
+                    <button class="btn btn--gold" type="submit">Update password</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+
+            <div class="panel">
+              <div class="panel__head">
+                <h3>Change username</h3>
+                <p>Your sign-in name for this dashboard.</p>
+              </div>
+              <div class="panel__body">
+                <form id="userForm" novalidate>
+                  <div class="form-grid">
+                    <div class="field">
+                      <label for="newUsername">New username</label>
+                      <input class="input" id="newUsername" type="text" spellcheck="false" placeholder="e.g. rbadmin">
+                      <span class="hint">3–24 characters. Letters, numbers, dot, dash, underscore.</span>
+                    </div>
+                    <div class="field">
+                      <label for="userPw">Current password</label>
+                      <input class="input" id="userPw" type="password" autocomplete="current-password" placeholder="Confirm with password">
+                    </div>
+                  </div>
+                  <div class="form-actions" style="margin-top:16px">
+                    <button class="btn btn--ink" type="submit">Update username</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <div class="panel">
+              <div class="panel__head"><h3>Login details</h3></div>
+              <div class="panel__body">
+                <div class="enq__meta" style="margin-bottom:14px">
+                  <span class="tag tag--muted">Username: <b id="secUser">admin</b></span>
+                  <span class="tag tag--green">Role: Administrator</span>
+                </div>
+                <div class="feed">
+                  <div class="feed__item"><span class="feed__dot"></span><div><b>Currently signed in</b><span id="secSignedIn">—</span></div></div>
+                  <div class="feed__item"><span class="feed__dot"></span><div><b>Password last changed</b><span id="secPwChanged">Never changed from default</span></div></div>
+                  <div class="feed__item"><span class="feed__dot"></span><div><b>Account created</b><span id="secCreated">—</span></div></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="panel">
+              <div class="panel__head"><h3>Recovery</h3></div>
+              <div class="panel__body">
+                <p style="font-size:.85rem;color:var(--body)">If you forget your password, use the recovery key on the sign-in screen. In this demo the key is <b>RBH-RESET-2026</b>.</p>
+                <p class="hint">In a production deployment this key would be replaced by email reset tokens issued by your server.</p>
+              </div>
+            </div>
+
+            <div class="panel">
+              <div class="panel__head"><h3>Security tips</h3></div>
+              <div class="panel__body">
+                <ul class="checks" style="margin:0">
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg> Use a password you don't use anywhere else</li>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg> Don't sign in on a shared or public computer</li>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg> Download a data backup every week</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================= ACTIVITY VIEW -->
+      <section class="view" id="view-activity">
+        <div class="pagehead">
+          <div>
+            <h2>Activity log</h2>
+            <p>The last 120 actions taken in this dashboard.</p>
+          </div>
+          <div class="pagehead__actions">
+            <button class="btn btn--ghost btn--sm" data-action="clear-log">Clear log</button>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="panel__body" id="activityList"></div>
+        </div>
+      </section>
+
+    </div>
+  </div>
+</div>
+
+<!-- ======================================================================
+     PROPERTY EDITOR MODAL
+     ====================================================================== -->
+<div class="admin-modal" id="propModal" role="dialog" aria-modal="true" aria-label="Property editor">
+  <div class="admin-modal__veil" data-close-modal></div>
+  <div class="admin-modal__panel">
+    <div class="admin-modal__head">
+      <h3 id="propModalTitle">Add property</h3>
+      <button class="iconbtn" data-close-modal aria-label="Close">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+    <form id="propForm">
+      <div class="admin-modal__body">
+        <input type="hidden" id="pfId">
+        <div class="form-grid">
+          <h4>Listing details</h4>
+          <div class="field field--full">
+            <label for="pfTitle">Property title *</label>
+            <input class="input" id="pfTitle" type="text" placeholder="e.g. 4 Bedroom Detached Duplex with BQ">
+            <span class="field__err">Please give the property a title.</span>
+          </div>
+          <div class="field">
+            <label for="pfPurpose">Purpose *</label>
+            <select class="select" id="pfPurpose">
+              <option value="sale">For sale</option>
+              <option value="rent">For rent</option>
+              <option value="shortlet">Short-let</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="pfType">Property type *</label>
+            <select class="select" id="pfType">
+              <option>Duplex</option><option>Bungalow</option><option>Apartment</option>
+              <option>Terrace</option><option>Land</option><option>Commercial</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="pfPrice">Price (₦) *</label>
+            <input class="input" id="pfPrice" type="number" min="0" step="1000" placeholder="85000000">
+            <span class="field__err">Enter a price.</span>
+          </div>
+          <div class="field" id="pfPeriodWrap">
+            <label for="pfPeriod">Rent period</label>
+            <select class="select" id="pfPeriod">
+              <option value="year">Per year</option>
+              <option value="month">Per month</option>
+              <option value="night">Per night</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="pfBeds">Bedrooms</label>
+            <input class="input" id="pfBeds" type="number" min="0" step="1" placeholder="4">
+          </div>
+          <div class="field">
+            <label for="pfBaths">Bathrooms</label>
+            <input class="input" id="pfBaths" type="number" min="0" step="1" placeholder="5">
+          </div>
+          <div class="field">
+            <label for="pfArea">Size (sqm)</label>
+            <input class="input" id="pfArea" type="number" min="0" step="1" placeholder="420">
+          </div>
+          <div class="field">
+            <label for="pfStatus">Status</label>
+            <select class="select" id="pfStatus">
+              <option value="available">Available</option>
+              <option value="pending">Under offer</option>
+              <option value="sold">Sold</option>
+              <option value="rented">Rented</option>
+            </select>
+          </div>
+
+          <h4>Location</h4>
+          <div class="field">
+            <label for="pfLocation">Area / neighbourhood *</label>
+            <input class="input" id="pfLocation" type="text" placeholder="e.g. Akobo" list="locationList">
+            <datalist id="locationList"></datalist>
+            <span class="field__err">Enter the area.</span>
+          </div>
+          <div class="field">
+            <label for="pfAddress">Full address</label>
+            <input class="input" id="pfAddress" type="text" placeholder="Off Olorunda Abaa, Akobo, Ibadan">
+          </div>
+
+          <h4>Presentation</h4>
+          <div class="field field--full">
+            <label>Photo</label>
+            <img class="preview-img" id="pfImagePreview" alt="Selected property photo">
+            <div class="imgpicker" id="pfImagePicker" style="margin-top:9px"></div>
+            <span class="hint">Pick one of the included photos, or paste an image URL below.</span>
+          </div>
+          <div class="field field--full">
+            <label for="pfImage">Image path or URL</label>
+            <input class="input" id="pfImage" type="text" placeholder="assets/img/p1.jpg">
+          </div>
+          <div class="field field--full">
+            <label for="pfDescription">Description</label>
+            <textarea class="textarea" id="pfDescription" placeholder="Describe the property honestly — condition, documents, what's included."></textarea>
+          </div>
+          <div class="field field--full">
+            <label for="pfFeatures">Features (one per line)</label>
+            <textarea class="textarea" id="pfFeatures" placeholder="All rooms en-suite&#10;Boys quarters&#10;Borehole water"></textarea>
+          </div>
+          <div class="field field--full">
+            <div class="switch" style="padding:0">
+              <input type="checkbox" id="pfFeatured">
+              <div><label for="pfFeatured">Feature this property on the homepage</label></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="admin-modal__foot">
+        <button class="btn btn--ghost" type="button" data-close-modal>Cancel</button>
+        <button class="btn btn--gold" type="submit" id="propSaveBtn">Save property</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- ======================================================================
+     GENERIC CONFIRM / NOTE MODAL
+     ====================================================================== -->
+<div class="admin-modal" id="confirmModal" role="dialog" aria-modal="true" aria-label="Confirm">
+  <div class="admin-modal__veil" data-close-confirm></div>
+  <div class="admin-modal__panel admin-modal__panel--sm">
+    <div class="admin-modal__head">
+      <h3 id="confirmTitle">Are you sure?</h3>
+    </div>
+    <div class="admin-modal__body">
+      <p id="confirmText" style="color:var(--body);font-size:.92rem;margin:0">This cannot be undone.</p>
+      <div id="confirmExtra" style="margin-top:16px"></div>
+    </div>
+    <div class="admin-modal__foot">
+      <button class="btn btn--ghost" type="button" data-close-confirm>Cancel</button>
+      <button class="btn btn--danger" type="button" id="confirmYes">Yes, continue</button>
+    </div>
+  </div>
+</div>
+
+<!-- ======================================================================
+     ENQUIRY DETAIL MODAL
+     ====================================================================== -->
+<div class="admin-modal" id="enqModal" role="dialog" aria-modal="true" aria-label="Enquiry details">
+  <div class="admin-modal__veil" data-close-enq></div>
+  <div class="admin-modal__panel admin-modal__panel--sm">
+    <div class="admin-modal__head">
+      <h3>Enquiry details</h3>
+      <button class="iconbtn" data-close-enq aria-label="Close">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+    <div class="admin-modal__body" id="enqModalBody"></div>
+    <div class="admin-modal__foot">
+      <button class="btn btn--ghost" type="button" data-close-enq>Close</button>
+      <button class="btn btn--gold" type="button" id="enqSaveNote">Save note</button>
+    </div>
+  </div>
+</div>
+
+<script src="src/store.js"></script>
+<script src="src/admin.js"></script>
+</body>
+</html>
